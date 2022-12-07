@@ -4,6 +4,8 @@ exports.home = (req, res) => {
     res.send("Hello world")
 }
 
+
+//Add Todo
 exports.createTodo = async (req, res) => {
     try {
         const { title } = req.body;
@@ -28,3 +30,17 @@ exports.createTodo = async (req, res) => {
         console.log(error);
     }
 }
+
+
+//To get all Todos
+exports.getTodos = async (req, res) => {
+    try {   
+        const todos = await Todo.find();
+        res.status(201).json(todos)
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal server error"
+        })
+    }
+}
+
