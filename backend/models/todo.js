@@ -6,11 +6,7 @@ const todoSchema = new mongoose.Schema({
         required: [true, "Please enter title"],
         maxlength: [30, "Title not should be more than 30 character"]
     },
-    task: [
-        {
-            title: String
-        }
-    ]
+    tasks: [String]
 })
 
 module.exports = mongoose.model("Todo", todoSchema);
