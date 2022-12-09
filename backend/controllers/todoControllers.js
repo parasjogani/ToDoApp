@@ -92,10 +92,75 @@ exports.getTodo = async (req, res) => {
 //Edit Todo Title
 exports.editTodo = async (req, res) => {
     try {
-        const todoId = req.params.todoId;
-        
+        const newTodo = await Todo.findByIdAndUpdate(req.params.todoId, req.body.title);
+        res.status(201).json({
+            success: true,
+            message: "Todo title updated successfully",
+            newTodo
+        })
     } catch (error) {
-        
+        res.status(401).json({
+            success: false,
+            message: error.message,
+        })
+    }
+}
+
+//Edit Todo Tasks
+exports.editTodos = async (req, res) => {
+    try {
+        const newTodoTask = await Todo.findByIdAndUpdate(req.params.todoId, req.body);
+
+        res.status(201).json({
+            success: true,
+            message: "Task updated successfully"
+        })
+    } catch (error) {
+        console.log(error.message);
+        res.status(401).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
+//Delete Todo
+exports.deleteTodo = async (req, res) => {
+    try {
+        const deletedTodo = await Todo.findByIdAndDelete(req.params.todoId);
+        res.status(201).json({
+            success: true,
+            message: "Selected todo deleted successfully",
+            deletedTodo
+        })
+    } catch (error) {
+        console.log(error.message);
+        res.status(401).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
+//Delete task
+exports.deleteTask = async (req, res) => {
+    try {
+        const todoId = req.body.todoId;
+        const todo = await Todo.findById(todoId);
+        const deletedTodoTask = todo.tasks.pop();
+        await todo.save();
+
+        res.status(201).json({
+            success: true,
+            message: "Task deleted successfully",
+            deletedTodoTask
+        })
+    } catch (error) {
+        console.log(error.message);
+        res.status(401).json({
+            success: false,
+            message: "Failed"
+        })
     }
 }
 
