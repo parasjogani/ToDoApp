@@ -4,13 +4,13 @@ const router = express.Router();
 
 router.get("/", home);
 router.post("/createTodo", createTodo);
-router.post("/createTodos/:todoId", createTodos);
+router.post("/createTodos/:id", createTodos);
 router.get("/getTodos", getTodos);
-router.get("/getTodo/:todoId", getTodo);
-router.post("/editTodo/:todoId", editTodo);
-router.post("/editTodos/:todoId", editTodos);
-router.post("/deleteTodo/:todoId", deleteTodo);
-router.post("/deleteTask/:todoId", deleteTask);
+router.get("/getTodo/:id", getTodo);
+router.put("/editTodo/:id", editTodo);
+router.put("/editTodos/:id", editTodos);
+router.delete("/deleteTodo/:id", deleteTodo);
+router.delete("/deleteTask/:id", deleteTask);
 
 
 
