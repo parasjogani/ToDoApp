@@ -34,8 +34,8 @@ exports.createTodo = async (req, res) => {
 //Add Tasks
 exports.createTodos = async (req, res) => {
     try {
-        const todoId = req.params.todoId;
-        const todo = await Todo.findById(todoId);
+        const id = req.params.id;
+        const todo = await Todo.findById(id);
         if (!todo) {
             throw new Error("todo not found");
         }
@@ -92,7 +92,7 @@ exports.getTodo = async (req, res) => {
 //Edit Todo Title
 exports.editTodo = async (req, res) => {
     try {
-        const newTodo = await Todo.findByIdAndUpdate(req.params.todoId, req.body.title);
+        const newTodo = await Todo.findByIdAndUpdate(req.params.id, req.body);
         res.status(201).json({
             success: true,
             message: "Todo title updated successfully",
@@ -109,7 +109,7 @@ exports.editTodo = async (req, res) => {
 //Edit Todo Tasks
 exports.editTodos = async (req, res) => {
     try {
-        const newTodoTask = await Todo.findByIdAndUpdate(req.params.todoId, req.body);
+        const newTodoTask = await Todo.findByIdAndUpdate(req.params.id, req.body);
 
         res.status(201).json({
             success: true,
@@ -127,7 +127,7 @@ exports.editTodos = async (req, res) => {
 //Delete Todo
 exports.deleteTodo = async (req, res) => {
     try {
-        const deletedTodo = await Todo.findByIdAndDelete(req.params.todoId);
+        const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
         res.status(201).json({
             success: true,
             message: "Selected todo deleted successfully",
