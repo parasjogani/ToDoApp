@@ -8,12 +8,33 @@ const TodoList = () => {
 
     const fetchtodoData = async () => {
         const resp = await axios.get("/getTodos");
-        console.log(resp);
 
         if (resp.data.todos.length > 0) {
             setTodoData(resp.data.todos);
         }
     };
+
+    //Edit
+
+    const handleEdit = async (todo) => {
+      const newTitle = prompt("Enter new title")
+
+      if (!newTitle) {
+        alert("Please enter your title")
+      } else {
+        const resp = await axios.put(`/editTodo/${todo._id}`, {
+          title: newTitle
+        });
+        console.log(resp);
+      }
+
+    }
+
+    //Delete
+    const handleDelete = async (todoId) => {
+      const resp = await axios.delete(`/deleteTodo/${todoId}`)
+      console.log(resp);
+    }
 
     useEffect(() => {
         fetchtodoData();
@@ -30,12 +51,12 @@ const TodoList = () => {
     <div className="flex flex-wrap -m-2">
           {todoData && todoData.map((todo) => (
             <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
-              <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
+              <div className="h-full flex items-center border-gray-200 border bg-sky-200 p-4 rounded-lg">
                 <div className="flex-grow flex justify-between">
                   <h2 className="text-gray-900 title-font font-medium">{todo.title}</h2>
                   <div className="space-x-4">
-                    <button className="bg-green-500 px-5 py-1 rounded-md text-white">Edit</button>
-                    <button className="bg-red-500 px-3 py-1 rounded-md text-white">Delete</button>
+                    <button className="bg-green-500 px-5 py-1 rounded-md text-white" onClick={() => handleEdit(todo)}>Edit</button>
+                    <button className="bg-red-500 px-3 py-1 rounded-md text-white" onClick={() => handleDelete(todo._id)}>Delete</button>
                   </div>
                 </div>
               </div>
