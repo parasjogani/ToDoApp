@@ -145,9 +145,10 @@ exports.deleteTodo = async (req, res) => {
 //Delete task
 exports.deleteTask = async (req, res) => {
     try {
-        const todoId = req.body.todoId;
-        const todo = await Todo.findById(todoId);
-        const deletedTodoTask = todo.tasks.pop();
+        const id = req.params.id;
+        const {name} = req.body;
+        const todo = await Todo.findById(id);
+        todo.tasks.splice(name, 1);
         await todo.save();
 
         res.status(201).json({
