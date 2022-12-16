@@ -52,8 +52,12 @@ const TodoList = () => {
     }
 
     //Delete Task
-    const handleDeleteTask = async (todo) => {
-      const resp = await axios.delete(`/deleteTask/${todo._id}`)
+    const handleDeleteTask = async (todo, val) => {
+      const resp = await axios.delete(`/deleteTask/${todo._id}`,
+      {name: val} 
+
+      )
+      
       console.log(resp);
     }
 
@@ -82,8 +86,8 @@ const TodoList = () => {
                   </div>
                 </div>
                 <div >
-                  {todo.tasks.map((val) => 
-                    <li>{val}<button class="rounded-full bg-red-700 text-white" onClick={() => handleDeleteTask(todo)}>X</button></li>
+                  {todo.tasks.map((val, index) => 
+                    <li>{val}<button class="rounded-full bg-red-700 text-white" onClick={() => handleDeleteTask(todo, index)}>X</button></li>
 
                     )}
                 </div>
