@@ -109,7 +109,10 @@ exports.editTodo = async (req, res) => {
 //Edit Todo Tasks
 exports.editTodos = async (req, res) => {
     try {
-        const newTodoTask = await Todo.findByIdAndUpdate(req.params.id, req.body);
+        const {newVal, index} = req.body
+        const todo = await Todo.findById(req.params.id);
+        todo.tasks[index] = newVal;
+        todo.save();
 
         res.status(201).json({
             success: true,
@@ -145,16 +148,14 @@ exports.deleteTodo = async (req, res) => {
 //Delete task
 exports.deleteTask = async (req, res) => {
     try {
-        const id = req.params.id;
         const {name} = req.body;
-        const todo = await Todo.findById(id);
+        const todo = await Todo.findById(req.params.id);
         todo.tasks.splice(name, 1);
         await todo.save();
 
         res.status(201).json({
             success: true,
             message: "Task deleted successfully",
-            deletedTodoTask
         })
     } catch (error) {
         console.log(error.message);
