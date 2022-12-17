@@ -42,7 +42,20 @@ const TodoList = () => {
         });
         console.log(resp);
       }
+    }
 
+    //Edit Tasks
+    const handleEditTask = async (todo, val) => {
+      const newTask = prompt("Enter new task")
+
+      if (!newTask) {
+        alert("Please enter your task")
+      } else {
+        const resp = await axios.put(`/editTodos/${todo._id}`, {
+            newVal: newTask,
+            index: val
+        })
+      }
     }
 
     //Delete
@@ -87,7 +100,9 @@ const TodoList = () => {
                 </div>
                 <div >
                   {todo.tasks.map((val, index) => 
-                    <li>{val}<button class="rounded-full bg-red-700 text-white" onClick={() => handleDeleteTask(todo, index)}>X</button></li>
+                    <li>{val}
+                    <button class="rounded-full bg-green-700 text-white" onClick={() => handleEditTask(todo, index)}>E</button>
+                    <button class="rounded-full bg-red-700 text-white" onClick={() => handleDeleteTask(todo, index)}>X</button></li>
 
                     )}
                 </div>
